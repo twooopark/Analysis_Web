@@ -107,12 +107,42 @@ def crawling_kyochon(
                     results.append( (name,address,sido,gungu) )
             except AttributeError as e:
                 err(e)
-    # store
+
     table = pd.DataFrame(results, columns=['name', 'address', 'sido', 'gungu'])
     table['sido'] = table.sido.apply(lambda v: sido_dict.get(v, v))
     table['gungu'] = table.gungu.apply(lambda v: gungu_dict.get(v, v))
     table.to_csv(
         '{0}/kyochon_table.csv'.format(RESULT_DIRECTORY),
+        encoding='utf-8', mode='w', index=True)
+
+
+def crawling_bbq(
+        err=lambda e: print('%s : %s' % (e, datetime.now()), file=sys.stderr)
+        ):
+    results = []
+
+    url = 'https://www.bbq.co.kr/page/order/store-search_left.asp?lat=37.491872&lng=127.115922&schval=%s' % ( urllib.parse.quote('점') )
+    html = crawling(url=url)
+
+    try:
+        bs = BeautifulSoup(html, 'html.parser')
+        tags_div = bs.findAll('div', attrs={'class': 'storeNearyByItem-title'})
+        items = bs.findAll('div', attrs={'class': 'storeNearyByItem-address'})
+        for i in range(len(tags_div)):
+            name = tags_div[i].find('span').text
+            address = items[i].text.strip()
+            sido = address.split()[0]
+            gungu = address.split()[1]
+            print(address)
+            results.append((name, address, sido, gungu))
+    except AttributeError as e:
+        err(e)
+
+    table = pd.DataFrame(results, columns=['name', 'address', 'sido', 'gungu'])
+    table['sido'] = table.sido.apply(lambda v: sido_dict.get(v, v))
+    table['gungu'] = table.gungu.apply(lambda v: gungu_dict.get(v, v))
+    table.to_csv(
+        '{0}/bbq_table.csv'.format(RESULT_DIRECTORY),
         encoding='utf-8', mode='w', index=True)
 
 
@@ -122,14 +152,19 @@ if not os.path.exists(RESULT_DIRECTORY):
     os.makedirs(RESULT_DIRECTORY)
 
 if __name__ == '__main__':
-    # # pelicana - 처리, 저장
-    # crawling_pelicana()
-    #
-    # # nene
-    # crawling(
-    #     url='http://nenechicken.com/subpage/where_list.asp?target_step2=%s&proc_type=step1&target_step1=%s'
-    #         % (urllib.parse.quote('전체'), urllib.parse.quote('전체')),
-    #     proc=proc_nene,
-    #     store=store_nene)
-    # # kyochon - 처리, 저장
+    # pelicana
+    crawling_pelicana()
+
+
+    # nene
+    crawling(
+        url='http://nenechicken.com/subpage/where_list.asp?target_step2=%s&proc_type=step1&target_step1=%s'
+            % (urllib.parse.quote('전체'), urllib.parse.quote('전체')),
+        proc=proc_nene,
+        store=store_nene)
+
+    # kyochon
     crawling_kyochon()
+
+    # bbq
+    crawling_bbq()
