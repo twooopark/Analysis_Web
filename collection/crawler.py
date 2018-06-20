@@ -19,6 +19,7 @@ def crawling(
             #         result = proc(result)
             # if store is not None: --> 위와 마찬가지로 생략
             #         result = store(result)
+
         except UnicodeDecodeError:
             # Legal values for this argument are
             # 'strict' (raise a UnicodeDecodeError exception),
@@ -26,6 +27,8 @@ def crawling(
             # 'ignore' (just leave the character out of the Unicode result), or
             # 'backslashreplace' (inserts a \xNN escape sequence)
             result = receive.decode(encoding, 'replace')
+
+        print('%s : success for request [%s]' %(datetime.now(), url))
         return result
     except Exception as e:
         err(e)

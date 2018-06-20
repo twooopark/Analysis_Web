@@ -1,6 +1,10 @@
 from itertools import count
+from itertools import count
 from collection import crawling
 from bs4 import BeautifulSoup
+import pandas as pd
+from collection.data_dict import sido_dict, gungu_dict
+import os
 # import analyze
 # import visualize
 # from config import CONFIG
@@ -20,7 +24,9 @@ from bs4 import BeautifulSoup
 #             store=store)
 
 def crawling_pelicana():
-    for page in range(115,123): #count(start=1):  # page값은 1부터 계속 상승... 내부에서 break
+    results = []
+    for page in range(1,3): #count(start=1):
+        #range(115,123):   # page값은 1부터 계속 상승... 내부에서 break
         url='http://pelicana.co.kr/store/stroe_search.html?page='+str(page)+'&branch_name=&gu=&si='
         html = crawling(url=url)
 
@@ -36,8 +42,31 @@ def crawling_pelicana():
             break;
 
         for tag_tr in tags_tr:
-            print(list(tag_tr.strings))
+            strs = list(tag_tr.strings)
+            # print(strs)
+            name = strs[1]
+            addr = strs[3]
+            sidogu = strs[3].split(" ")[:2]
+            # print(addr)
 
+            results.append( (name, addr)+tuple(sidogu) )
+            # 튜플을 union 하면서
+            # [('황간점', '충청북도 영동군 황간면 남성리 558-1', '충청북도', '영동군'),..]
+            # 위와 같은 결과물을 얻음음
+    print(results)
+    # stroe
+    table = pd.DataFrame(results, columns=['name','adderss','sido','gungu'])
+    print(table)
+
+    table.to_csv(
+        '{0}/pelicana_table.csv'.format('__result__'),# RESULT_DIRECTORY),
+        encoding='utf-8',
+        mode='w',
+        index=True
+    )
+# 경로가 없으면 만들자
+if not os.path.exists('__result__'):
+    os.makedirs('__result__')
 
 if __name__ == '__main__':
     # pelicana - 처리, 저장
