@@ -19,14 +19,19 @@ def ex1():
 def ex2():
     bs = BeautifulSoup(html, 'html.parser')
     print("bs.div.attrs:",bs.div.attrs)
+    print("bs.find(bs.div.attrs):",bs.find(bs.div.attrs))
 
 # attrs.elements
 def ex3():
     bs = BeautifulSoup(html, 'html.parser')
-    print("bs.div.attrs:",bs.div.attrs)
-    print("bs.find(bs.div.attrs):",bs.find(bs.div.attrs))
+
+    tag = bs.find('td', attrs={'class': 'title'})
+    print(tag)
+
+    tag = bs.find(attrs={'class': 'tit3'})
+    print(tag)
 
 if __name__ == '__main__':
-    ex1()
+    ex3()
 
 
