@@ -7,7 +7,7 @@
 # 치킨 브랜드 별, 매장 탐색 방식
 > BBQ
 ---
-<img src="https://github.com/twooopark/Analysis_Web/blob/master/bbq.jpg" height="500px" />
+<img src="https://github.com/twooopark/Analysis_Web/blob/master/bbq.PNG" height="500px" />
 
 BBQ 매장찾기 : [https://www.bbq.co.kr/page/order/store-search.asp](https://www.bbq.co.kr/page/order/store-search.asp)
 매장찾기 기능에서, 모든 매장은 '~점'이라는 지점명을 가지고 있습니다.
@@ -16,6 +16,6 @@ BBQ 매장찾기 : [https://www.bbq.co.kr/page/order/store-search.asp](https://w
 
 > 페리카나
 ---
-<img src="https://github.com/twooopark/Analysis_Web/blob/master/pelic.jpg" height="500px" />
+<img src="https://github.com/twooopark/Analysis_Web/blob/master/pelic.PNG" height="500px" />
 ---
-<img src="https://github.com/twooopark/Analysis_Web/blob/master/pelic_117page.jpg" height="500px" />
+<img src="https://github.com/twooopark/Analysis_Web/blob/master/pelic_117page.PNG" height="500px" />
