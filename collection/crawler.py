@@ -2,16 +2,10 @@ from urllib.request import Request, urlopen
 from datetime import datetime
 import sys
 
-# 크롤러 모듈에서 제공하는 에러함수 사용
-def error(e):
-    print('%s : %s' % (e, datetime.now()), file=sys.stderr)
-
-
-
 def crawling(
         url='',
         encoding='utf-8',
-        err=error):
+        err=lambda e: print('%s : %s' % (e, datetime.now()), file=sys.stderr)):
     try:
         request = Request(url)
         response = urlopen(request)
