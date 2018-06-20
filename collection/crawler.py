@@ -11,7 +11,7 @@ def error(e):
 def crawling(
         url='',
         encoding='utf-8',
-        err=None):
+        err=error):
     try:
         request = Request(url)
         response = urlopen(request)
@@ -28,4 +28,4 @@ def crawling(
             result = receive.decode(encoding, 'replace')
         return result
     except Exception as e:
-        error(e)
+        err(e)
