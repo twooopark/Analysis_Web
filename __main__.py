@@ -1,12 +1,15 @@
-from itertools import count
 from collection.data_dict import sido_dict, gungu_dict
 from collection.crawler import crawling
-from bs4 import BeautifulSoup
+from selenium import webdriver
 from datetime import datetime
-import urllib
-import sys
+from bs4 import BeautifulSoup
+from itertools import count
+
 import xml.etree.ElementTree as et
 import pandas as pd
+import urllib
+import time
+import sys
 import os
 
 
@@ -27,7 +30,7 @@ def crawling_pelicana():
 
         # 마지막 페이지
         if len(tags_tr) == 0 :
-            break;
+            break
 
         # tuple로 변환
         for tag_tr in tags_tr:
@@ -92,12 +95,15 @@ def crawling_kyochon(
             print(sido1, ", ",sido2," :", end=" ")
             url = 'http://www.kyochon.com/shop/domestic.asp?sido1='+str(sido1)+'&sido2='+str(sido2)+'&txtsearch='
             html = crawling(url=url)
-            if html is None :
-                break;
+
             try:
                 bs = BeautifulSoup(html, 'html.parser')
                 tag_div = bs.find('div', attrs={'class': 'shopSchList'})
                 tags_dl = tag_div.findAll('dl')
+                # 마지막 페이지
+                if len(tags_dl) == 0:
+                    break
+
                 for tag_dl in tags_dl:
                     name = tag_dl.find('dt').text
                     address = tag_dl.find('dd').text.strip().replace("\t","").split("\r\n")[0]
@@ -128,12 +134,12 @@ def crawling_bbq(
         bs = BeautifulSoup(html, 'html.parser')
         tags_div = bs.findAll('div', attrs={'class': 'storeNearyByItem-title'})
         items = bs.findAll('div', attrs={'class': 'storeNearyByItem-address'})
+
         for i in range(len(tags_div)):
             name = tags_div[i].find('span').text
             address = items[i].text.strip()
             sido = address.split()[0]
             gungu = address.split()[1]
-            print(address)
             results.append((name, address, sido, gungu))
     except AttributeError as e:
         err(e)
@@ -146,6 +152,55 @@ def crawling_bbq(
         encoding='utf-8', mode='w', index=True)
 
 
+def crawling_goobne(
+        err=lambda e: print('%s : %s' % (e, datetime.now()), file=sys.stderr)
+        ):
+    results = []
+    url = 'https://www.goobne.co.kr/store/search_store.jsp'
+
+    # 첫 페이지 로딩
+    browser = webdriver.Chrome('D:\pythonPycharm\chromedriver');
+    browser.get(url)
+    # wait page loading...
+    time.sleep(3)
+
+    for page in count(start=1):
+        # 자바스크립트 실행
+        script = 'store.getList(%d)' % page
+        browser.execute_script(script)
+        time.sleep(1)
+        html = browser.page_source
+
+        try:
+            bs = BeautifulSoup(html, 'html.parser')
+
+            tag_tbody = bs.find('tbody', attrs={'id': 'store_list'})
+            tags_tr = tag_tbody.findAll('tr')
+
+            # 마지막 페이지
+            if len(tags_tr) == 1:
+                break
+            for tag_tr in tags_tr:
+                # # 전화번호가 없는 경우 에러 발생
+                # strings = list(tag_tr.strings)
+                # name = strings[1]
+                # address = strings[6]
+                # sido = address.split()[0]
+                # gungu = address.split()[1]
+                # print(name, address, sido, gungu)
+                name = tag_tr.find('td').text
+                address = tag_tr.find('td', attrs={'class': 't_left'}).text.strip()[:-15]
+                sido = address.split()[0]
+                gungu = address.split()[1]
+                results.append((name, address, sido, gungu))
+        except AttributeError as e:
+            err(e)
+        table = pd.DataFrame(results, columns=['name', 'address', 'sido', 'gungu'])
+        table['sido'] = table.sido.apply(lambda v: sido_dict.get(v, v))
+        table['gungu'] = table.gungu.apply(lambda v: gungu_dict.get(v, v))
+        table.to_csv(
+            '{0}/goobne_table.csv'.format(RESULT_DIRECTORY),
+            encoding='utf-8', mode='w', index=True)
 
 # 경로가 없으면 만들자
 if not os.path.exists(RESULT_DIRECTORY):
@@ -168,3 +223,6 @@ if __name__ == '__main__':
 
     # bbq
     crawling_bbq()
+
+    # goobne
+    crawling_goobne()
