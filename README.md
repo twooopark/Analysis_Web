@@ -8,7 +8,7 @@
 # 치킨 브랜드 별, 매장 탐색 방식
 > BBQ
 ---
-- BBQ 매장찾기 : [https://www.bbq.co.kr/page/order/store-search.asp](https://www.bbq.co.kr/page/order/store-search.asp)
+- BBQ 매장찾기 : [https://www.bbq.co.kr/page/order/store-search.asp](https://www.bbq.co.kr/page/order/store-search.asp)  
 매장찾기 기능에서, 모든 매장은 '~점'이라는 지점명을 가지고 있습니다.
 이 특징을 이용해서 매장명을 '점'으로 검색해봤습니다. [링크](https://www.bbq.co.kr/page/order/store-search_left.asp?lat=37.491872&lng=127.115922&schval=%EC%A0%90)
 1400개 가량의 매장이 검색됩니다.
@@ -16,20 +16,20 @@
 
 > 페리카나
 ---
-- 페리카나 매장찾기 : [http://pelicana.co.kr/store/stroe_search.html?page=&branch_name=&gu=&si=](http://pelicana.co.kr/store/stroe_search.html?page=&branch_name=&gu=&si=)
+- 페리카나 매장찾기 : [http://pelicana.co.kr/store/stroe_search.html?page=&branch_name=&gu=&si=](http://pelicana.co.kr/store/stroe_search.html?page=&branch_name=&gu=&si=)  
 매장 찾기 기능에서, 매장 리스트의 모든 페이지를 완전탐색하여 모든 매장을 찾습니다.
 <img src="https://github.com/twooopark/Analysis_Web/blob/master/pelic.PNG" height="500px" />
 
 
 > 네네치킨
 ---
-제공받은 URL을 통해 XML형식으로 데이터를 받았고, xml.etree.ElementTree을 이용해 파싱합니다.
+- 제공받은 url을 통해 XML형식으로 데이터를 받았고, xml.etree.ElementTree을 이용해 파싱합니다.  
 <img src="https://github.com/twooopark/Analysis_Web/blob/master/nene.PNG" height="500px" />
 
 
 > 교촌치킨
 ---
-- 교촌치킨 매장찾기 : [http://www.kyochon.com/shop/domestic.asp?](http://www.kyochon.com/shop/domestic.asp?)
+- 교촌치킨 매장찾기 : [http://www.kyochon.com/shop/domestic.asp?](http://www.kyochon.com/shop/domestic.asp?)  
 교촌치킨은 시/도, 구/군 별 Select 항목을 선택해야 해당 지역의 매장 결과가 출력됩니다.
 option값을 이용해 url을 변경, 요청을 반복하여 모든 매장을 탐색합니다.
 참고) 초기에 시/도의 select 태그 선택 후, 구/군의 option값들을 읽어들이는 방식을 선택했지만, Javascript가
@@ -39,7 +39,7 @@ option값을 이용해 url을 변경, 요청을 반복하여 모든 매장을 �
 
 > 굽네치킨
 ---
-- 굽네치킨 매장찾기 : [https://www.goobne.co.kr/store/search_store.jsp](https://www.goobne.co.kr/store/search_store.jsp)
+- 굽네치킨 매장찾기 : [https://www.goobne.co.kr/store/search_store.jsp](https://www.goobne.co.kr/store/search_store.jsp)  
 굽네치킨은 시/도, 구/군과 페이지를 선택해야 해당 지역의 매장 결과가 출력되었습니다.
 모든 페이지에 방문하여 모든 매장을 탐색했습니다.
 교촌치킨과 마찬가지로 urllib을 통해 html을 읽어들이면, Javascript가 완전히 로드/렌더링 되지 않은 상태로 html 읽어들여, 원하는 결과를 얻지 못합니다.
