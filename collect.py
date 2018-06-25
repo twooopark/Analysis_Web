@@ -210,7 +210,6 @@ if __name__ == '__main__':
     # pelicana
     crawling_pelicana()
 
-
     # nene
     crawling(
         url='http://nenechicken.com/subpage/where_list.asp?target_step2=%s&proc_type=step1&target_step1=%s'
