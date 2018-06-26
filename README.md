@@ -48,28 +48,42 @@ selenium 라이브러리를 사용하여, 문제를 해결했습니다.
 <img src="https://github.com/twooopark/Analysis_Web/blob/master/goobne.PNG" width="300px" height="200px" />
 
 
-
 # 치킨 브랜드 매장 정보 시각화
 > BBQ
 ---
-<img src="https://github.com/twooopark/Analysis_Web/blob/master/bbq.PNG" width="300px" height="200px" />
+<img src="https://github.com/twooopark/Analysis_Web/blob/master/__result__/visualization/bbq.png" width="400px" height="600px" />
 
 > 페리카나
 ---
-<img src="https://github.com/twooopark/Analysis_Web/blob/master/pelic.PNG" width="300px" height="200px" />
+<img src="https://github.com/twooopark/Analysis_Web/blob/master/__result__/visualization/pelicana.png" width="400px" height="600px" />
 
 
 > 네네치킨
 ---
-<img src="https://github.com/twooopark/Analysis_Web/blob/master/nene.PNG" width="300px" height="200px" />
+<img src="https://github.com/twooopark/Analysis_Web/blob/master/__result__/visualization/nene.png" width="400px" height="600px" />
 
 
 > 교촌치킨
 ---
-<img src="https://github.com/twooopark/Analysis_Web/blob/master/kyochon.PNG" width="300px" height="200px" />
+<img src="https://github.com/twooopark/Analysis_Web/blob/master/__result__/visualization/kyochon.png" width="400px" height="600px" />
 
 
 > 굽네치킨
 ---
-<img src="https://github.com/twooopark/Analysis_Web/blob/master/goobne.PNG" width="300px" height="200px" />
+<img src="https://github.com/twooopark/Analysis_Web/blob/master/__result__/visualization/goobne.png" width="400px" height="600px" />
+
+
+> 치킨 프랜차이즈 매장 분포
+---
+<img src="https://github.com/twooopark/Analysis_Web/blob/master/__result__/visualization/total.png" width="400px" height="600px" />
+
+
+> 인구 만명 당 매장 수
+---
+<img src="https://github.com/twooopark/Analysis_Web/blob/master/__result__/visualization/total10k.png" width="400px" height="600px" />
+
+
+> 면적 당 매장 수
+---
+<img src="https://github.com/twooopark/Analysis_Web/blob/master/__result__/visualization/area.png" width="400px" height="600px" />
 
