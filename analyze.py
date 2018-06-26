@@ -113,10 +113,22 @@ goobne_table = goobne_table[goobne_table.gungu != '']
 goobne = goobne_table.apply(lambda r: str(r['sido']) + ' ' + str(r['gungu']), axis='columns').value_counts() # 'SIDO GUNGU' 별 매장수
 # print(goobne)
 
+# bbq
+bbq_table = pd.DataFrame.from_csv(
+    '__result__/crawling/bbq_table.csv',
+    encoding='utf-8',
+    index_col=0,
+    header=0).fillna('')
+
+bbq_table = bbq_table[bbq_table.sido != '']
+bbq_table = bbq_table[bbq_table.gungu != '']
+bbq = bbq_table.apply(lambda r: str(r['sido']) + ' ' + str(r['gungu']), axis='columns').value_counts() # 'SIDO GUNGU' 별 매장수
+# print(bbq)
+
 
 
 #
-chicken_table = pd.DataFrame({'pelicana': pelicana, 'nene': nene, 'kyochon': kyochon, 'goobne': goobne}).fillna(0)
+chicken_table = pd.DataFrame({'pelicana': pelicana, 'nene': nene, 'kyochon': kyochon, 'goobne': goobne, 'bbq': bbq}).fillna(0)
 chicken_table = chicken_table.drop(chicken_table[chicken_table.index == '00 18'].index)
 chicken_table = chicken_table.drop(chicken_table[chicken_table.index == '테스트 테스트구'].index)
 chicken_sum_table = chicken_table.sum(axis=0)
@@ -142,7 +154,7 @@ chicken_merge = pd.merge(
 # print(chicken_merge['면적'])
 
 chicken_merge = chicken_merge[~np.isnan(chicken_merge['면적'])]
-print(chicken_merge)
+# print(chicken_merge)
 
 
 # 경로가 없으면 만들자
@@ -157,6 +169,8 @@ showmap(chicken_merge, 'nene', '네네 매장 분포', 'Greens')
 showmap(chicken_merge, 'goobne', '굽네 매장 분포', 'Reds')
 # 교촌 매장 분포
 showmap(chicken_merge, 'kyochon', '교촌 매장 분포', 'Oranges')
+# 비비큐 매장 분포
+showmap(chicken_merge, 'bbq', '비비큐 매장 분포', 'Purples')
 
 chicken_merge['total'] = chicken_table.sum(axis=1)
 # 치킨 프랜차이즈 매장 분포
@@ -166,7 +180,7 @@ showmap(chicken_merge, 'total', '치킨 프랜차이즈 매장 분포', 'rainbow
 # 인구 만명 당 매장 수
 chicken_merge['total10k'] = chicken_merge['total'] / chicken_merge['인구수']
 chicken_merge = chicken_merge[~np.isnan(chicken_merge['total10k'])]
-showmap(chicken_merge, 'total10k', '치킨 프랜차이즈 매장 분포', 'Purples')
+showmap(chicken_merge, 'total10k', '치킨 프랜차이즈 매장 분포', 'Accent')
 
 # 면적 당 매장 수
 chicken_merge['area'] = chicken_merge['total'] / chicken_merge['면적']
